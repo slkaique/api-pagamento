@@ -29,7 +29,7 @@ def listar_agendamentos(request):
     return JsonResponse([agendamento.campos() for agendamento in agendamentos], safe=False)
 
 @require_http_methods(["GET"])
-def obter_agendamento(request, id):
+def consultar_agendamento(request, id):
     agendamento = get_object_or_404(modelo_pagamento, id=id)
     return JsonResponse(agendamento.campos())
 

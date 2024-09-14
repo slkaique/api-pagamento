@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from agendamentos import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/agendamentos/', views.criar_agendamento, name='criar_agendamento'),
+    path('api/listar-agendamentos/', views.listar_agendamentos, name='listar_agendamentos'),
+    path('api/agendamentos/<int:id>/', views.consultar_agendamento, name='consultar_agendamento'),
+    path('api/deletar-agendamento/<int:id>/', views.deletar_agendamento, name='deletar_agendamento'),
 ]

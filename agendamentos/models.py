@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 
-class modelo_pagamento(models.model):
+class modelo_pagamento(models.Model):
     data_pagamento = models.DateField()
     permite_recorrencia = models.BooleanField()
     quantidade_recorrencia = models.IntegerField(validators=[MinValueValidator(0)])
