@@ -14,7 +14,7 @@ class modelo_pagamento(models.Model):
     def campos(self):
         return {
             'id': self.id,
-            'data_pagamento': self.data_pagamento.isoformat(),
+            'data_pagamento': self.data_pagamento.strftime('%Y-%m-%d'),
             'permite_recorrencia': self.permite_recorrencia,
             'quantidade_recorrencia': self.quantidade_recorrencia,
             'intervalo_recorrencia': self.intervalo_recorrencia,
