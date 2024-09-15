@@ -6,6 +6,9 @@ from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404
 from .models import modelo_pagamento
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -45,6 +48,14 @@ def consultar_agendamento(request, id):
 @csrf_exempt
 @require_http_methods(["DELETE"])
 def deletar_agendamento(request, id):
-    agendamento = get_object_or_404(modelo_pagamento, id=id)
-    agendamento.delete()
-    return JsonResponse({}, status=204)
+    try:
+        agendamento = get_object_or_404(modelo_pagamento, id=id)
+        agendamento.delete()
+        return JsonResponse({'message': 'Agendamento deletado com sucesso'}, status=200)
+    except modelo_pagamento.DoesNotExist:
+        logger.warning(f"Tentativa de deletar agendamento inexistente. ID: {id}")
+        return JsonResponse({'error': 'Agendamento não encontrado'}, status=404)
+    except Exception as e:
+        logger.error(f"Erro ao deletar agendamento {id}: {str(e)}")
+        return JsonResponse({'error': 'Ocorreu um erro ao deletar o agendamento'}, status=500)
+
